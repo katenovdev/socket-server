@@ -1,5 +1,5 @@
-import { Controller, OnModuleInit } from '@nestjs/common';
-import { EventPattern, MessagePattern, Payload, Transport } from '@nestjs/microservices';
+import { Controller, Get, OnModuleInit } from '@nestjs/common';
+import { MessagePattern, Payload, Transport } from '@nestjs/microservices';
 import { SocketService } from './socket.service';
 
 @Controller()
@@ -15,5 +15,10 @@ export class SocketController implements OnModuleInit {
     console.log('Принял', payload);
     // const { event, data } = payload;
     return this.socketService.server.emit(payload.event, payload.data);
+  }
+
+  @Get('clients-count')
+  getClientsCount() {
+    return { count: this.socketService.getClientsCount(), port: parseInt(process.env.PORT) };
   }
 }
