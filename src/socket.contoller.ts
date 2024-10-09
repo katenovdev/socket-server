@@ -17,6 +17,13 @@ export class SocketController implements OnModuleInit {
     return this.socketService.server.emit(payload.event, payload.data);
   }
 
+  @Get('health')
+  async health() {
+    return {
+      statusCode: 200
+    }
+  }
+
   @Get('clients-count')
   getClientsCount() {
     return { count: this.socketService.getClientsCount(), port: parseInt(process.env.PORT) };
